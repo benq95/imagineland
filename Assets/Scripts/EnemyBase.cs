@@ -23,6 +23,7 @@ public class EnemyBase : MonoBehaviour
 
     void Update()
     {
+        _attackTimeCounter += Time.deltaTime;
         _currentState?.Invoke();
     }
 
@@ -44,7 +45,6 @@ public class EnemyBase : MonoBehaviour
 
     protected void AttackState()
     {
-        _attackTimeCounter += Time.deltaTime;
         if (_attackTimeCounter > (AttackCooldown + AttackTime + AttackWindup))
             //Return to "normal" state
             _currentState = IddleState;
