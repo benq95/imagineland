@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
     public int points;
+    public int playerHealths = 5;
     public Text pointsText;
+    public Text healthsText;
 
     #region Singleton
 
@@ -32,5 +34,6 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         pointsText.text = points.ToString();
-	}
+        healthsText.text = playerHealths.ToString();
+    }
 }
