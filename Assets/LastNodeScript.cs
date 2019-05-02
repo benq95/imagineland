@@ -17,12 +17,12 @@ public class LastNodeScript : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-            this.GetComponent<HingeJoint2D>().connectedBody = null;
-            player1 = null;
+            //this.GetComponent<HingeJoint2D>().connectedBody = null;
+            //player1 = null;
         }
     }
 
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collision col)
     {
         
         if (col.gameObject.name == "Player")
