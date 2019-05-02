@@ -18,6 +18,8 @@ public class RopeScript : MonoBehaviour {
 
 	public GameObject lastNode;
 
+    public bool isConnectedWithPlayer = false;
+
 
 	public LineRenderer lr;
 
@@ -35,10 +37,10 @@ public class RopeScript : MonoBehaviour {
 
 		player = GameObject.FindGameObjectWithTag ("Player");
 
-		lastNode = transform.gameObject;
+		//lastNode = transform.gameObject;
 
 
-		Nodes.Add (transform.gameObject);
+		//Nodes.Add (transform.gameObject);
 
 
 	}
@@ -47,35 +49,35 @@ public class RopeScript : MonoBehaviour {
 	void Update () {
 	
 
-		transform.position = Vector2.MoveTowards (transform.position,destiny,speed);
+		//transform.position = Vector2.MoveTowards (transform.position,destiny,speed);
 
 
 
 
-		if ((Vector2)transform.position != destiny) {
+		//if ((Vector2)transform.position != destiny) {
 
-			if (Vector2.Distance (player.transform.position, lastNode.transform.position) > distance) {
-
-
-				CreateNode ();
-
-			}
+		//	if (Vector2.Distance (player.transform.position, lastNode.transform.position) > distance) {
 
 
-		} else if (done == false) {
+		//		CreateNode ();
 
-			done = true;
-
-
-
-			while(Vector2.Distance (player.transform.position, lastNode.transform.position) > distance)
-			{
-				CreateNode ();
-			}
+		//	}
 
 
-			lastNode.GetComponent<HingeJoint2D> ().connectedBody = player.GetComponent<Rigidbody2D> ();
-		}
+		//} else if (done == false) {
+
+		//	done = true;
+
+
+
+		//	while(Vector2.Distance (player.transform.position, lastNode.transform.position) > distance)
+		//	{
+		//		CreateNode ();
+		//	}
+
+
+		//	lastNode.GetComponent<HingeJoint2D> ().connectedBody = player.GetComponent<Rigidbody2D> ();
+		//}
 
 
 		RenderLine ();
@@ -121,6 +123,14 @@ public class RopeScript : MonoBehaviour {
 		vertexCount++;
 
 	}
+
+    //void OnCollisionEnter(Collision col)
+    //{
+    //    if (col.gameObject.name == "Player")
+    //    {
+    //        lastNode.GetComponent<HingeJoint2D>().connectedBody = player.GetComponent<Rigidbody2D>();
+    //    }
+    //}
 
 
 
