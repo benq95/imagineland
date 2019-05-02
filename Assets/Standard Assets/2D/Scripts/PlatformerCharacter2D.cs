@@ -110,5 +110,6 @@ namespace UnityStandardAssets._2D
             theScale.x *= -1;
             transform.localScale = theScale;
         }
+
     }
 }
