@@ -5,19 +5,22 @@ using UnityEngine;
 public class TerrainTrigger : MonoBehaviour
 {
     public bool IsActive = false;
+    private int _enteredTerrains = 0;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        IsActive = true;
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        IsActive = true;
+        if (collision.tag == "Terrain")
+        {
+            IsActive = true;
+            _enteredTerrains++;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        IsActive = false;
+        if (collision.tag == "Terrain")
+            _enteredTerrains--;
+        if (_enteredTerrains == 0)
+            IsActive = false;
     }
 }

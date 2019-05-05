@@ -29,8 +29,8 @@ public class EnemyBase : MonoBehaviour
 
     protected void IddleState()
     {
-        var rch = Physics2D.Raycast(transform.position.ToVec2(), -transform.right.ToVec2(), PlayerDetectionDistance, LayerMask.GetMask("Player"));
-        Debug.DrawRay(transform.position, -(transform.right * PlayerDetectionDistance));
+        var rch = Physics2D.Raycast(transform.position.ToVec2(), transform.right.ToVec2(), PlayerDetectionDistance, LayerMask.GetMask("Player"));
+        Debug.DrawRay(transform.position, (transform.right * PlayerDetectionDistance));
         if (rch.collider != null)
         {
             _attackTimeCounter = 0.0f;
@@ -38,9 +38,9 @@ public class EnemyBase : MonoBehaviour
             return;
         }
         if (FloorCollider.IsActive && !WallCollider.IsActive)
-            transform.position -= transform.right * Time.deltaTime * Speed;
+            transform.position += transform.right * Time.deltaTime * Speed;
         else
-            transform.Rotate(transform.up, 180, Space.Self);        
+            transform.Rotate(transform.up * 180);        
     }
 
     protected void AttackState()
