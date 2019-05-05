@@ -21,18 +21,22 @@ public class MinotaurBoss : MonoBehaviour
     public int HP = 3;
     public event Action Death;
 
-    public float PlayerDetectionDistance = 2.0f;
+    public float PlayerDetectionDistance = 3.0f;
     public float Speed = 8.0f;
 
     private Action _currentState = null;
     private float _timeCounter = 0.0f;
     private Coroutine _attackCoroutine = null;
 
+    private Animator _animator;
+
 
     // Start is called before the first frame update
     void Start()
     {
         _currentState = Phase1;
+        _animator = GetComponent<Animator>();
+        _animator.SetBool("Walk", false);
     }
 
     // Update is called once per frame
@@ -63,11 +67,17 @@ public class MinotaurBoss : MonoBehaviour
     private IEnumerator AttackSequenceP1()
     {
         _currentState = null;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
+        _animator.SetTrigger("Throw");
+        yield return new WaitForSeconds(0.5f);
         ThrowAxeAtPlayer();
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
+        _animator.SetTrigger("Throw");
+        yield return new WaitForSeconds(0.5f);
         ThrowAxeAtPlayer();
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
+        _animator.SetTrigger("Throw");
+        yield return new WaitForSeconds(0.5f);
         ThrowAxeAtPlayer();
         yield return new WaitForSeconds(1);
         _currentState = Phase1Vulnerable;
@@ -77,6 +87,7 @@ public class MinotaurBoss : MonoBehaviour
 
     private void ThrowAxeAtPlayer()
     {
+        
         var axe = Instantiate(Axe);
         axe.transform.position = transform.position;
         axe.GetComponent<Rigidbody2D>().AddForce((Player.transform.position.ToVec2() - transform.position.ToVec2() + new Vector2(0.0f, 2.5f)) * 50);
@@ -113,7 +124,7 @@ public class MinotaurBoss : MonoBehaviour
     private IEnumerator AttackSequenceP2()
     {
         _currentState = null;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         for(int i = 0; i < 3; i++)
         {
             List<int> positionList = new List<int> { 0, 1, 2 };
@@ -125,6 +136,8 @@ public class MinotaurBoss : MonoBehaviour
                     index = (int)UnityEngine.Random.Range(0.0f, (float)positionList.Count - 0.001f);
                 }
                 int positionIndex = positionList[index];
+                _animator.SetTrigger("Throw");
+                yield return new WaitForSeconds(0.5f);
                 //Throw an axe at position
                 switch (positionIndex)
                 {
@@ -141,7 +154,7 @@ public class MinotaurBoss : MonoBehaviour
                         break;
                 }
                 positionList.RemoveAt(index);
-                yield return new WaitForSeconds(1.5f);
+                yield return new WaitForSeconds(1.0f);
             }
             yield return new WaitForSeconds(3);
         }
@@ -179,10 +192,31 @@ public class MinotaurBoss : MonoBehaviour
 
     private void Phase3Attack()
     {
+        var origin = transform.position;
+        origin.y -= 1;
+        var rch = Physics2D.Raycast(origin.ToVec2(), transform.right.ToVec2(), PlayerDetectionDistance, LayerMask.GetMask("Player"));
+        Debug.DrawRay(origin, (transform.right * PlayerDetectionDistance));
+        if (rch.collider != null)
+        {
+            if (_attackCoroutine == null)
+                _attackCoroutine = StartCoroutine(AttackSequenceP3());
+            return;
+        }
         if (FloorCollider.IsActive && !WallCollider.IsActive)
-            transform.position -= transform.right * Time.deltaTime * Speed;
+            transform.position += transform.right * Time.deltaTime * Speed;
         else
-            transform.Rotate(transform.up, 180, Space.Self);
+            transform.Rotate(transform.up * 180);
+    }
+
+    private IEnumerator AttackSequenceP3()
+    {
+        _currentState = null;
+        _animator.SetTrigger("Attack");
+        yield return new WaitForSeconds(1.31f);
+        //DEAL DMG TO PLAYER
+        _currentState = Phase3Attack;
+        _timeCounter = 0.0f;
+        _attackCoroutine = null;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -202,6 +236,7 @@ public class MinotaurBoss : MonoBehaviour
                     _currentState = Phase2;
                     break;
                 case 1:
+                    _animator.SetBool("Walk", true);
                     _currentState = Phase3;
                     break;
                 case 0:
