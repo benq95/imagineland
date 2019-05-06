@@ -34,8 +34,8 @@ public class MinotaurBoss : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _currentState = Phase1;
         _animator = GetComponent<Animator>();
+        _currentState = Phase1;
         _animator.SetBool("Walk", false);
     }
 
