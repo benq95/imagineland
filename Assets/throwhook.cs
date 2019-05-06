@@ -5,15 +5,16 @@ public class throwhook : MonoBehaviour {
 
 
 	public GameObject hook;
-
+    public Vector2 position;
 
 	public bool ropeActive;
+    public bool canHook;
 
 	GameObject curHook;
 
 	// Use this for initialization
 	void Start () {
-	
+        canHook = false;
 	}
 	
 	// Update is called once per frame
@@ -21,20 +22,22 @@ public class throwhook : MonoBehaviour {
 	
 
 
-		if (Input.GetMouseButtonDown (0)) {
+		if (Input.GetKeyDown("space")&&this.canHook&& ropeActive == false) {
 
 
-			if (ropeActive == false) {
-				Vector2 destiny = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+			
+                //Vector2 destiny = Camera.main.ScreenToWorldPoint (Input.mousePosition);
+                Vector2 destiny = this.position;
 
 
-				curHook = (GameObject)Instantiate (hook, transform.position, Quaternion.identity);
+                curHook = (GameObject)Instantiate (hook, transform.position, Quaternion.identity);
 
 				curHook.GetComponent<RopeScript> ().destiny = destiny;
 
 
 				ropeActive = true;
-			} else {
+			} else if(Input.GetKeyDown("space") && ropeActive == true)
+        {
 
 				//delete rope
 
@@ -48,4 +51,4 @@ public class throwhook : MonoBehaviour {
 
 
 	}
-}
+

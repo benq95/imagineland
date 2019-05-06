@@ -37,50 +37,54 @@ public class RopeScript : MonoBehaviour {
 
 		player = GameObject.FindGameObjectWithTag ("Player");
 
-		//lastNode = transform.gameObject;
+        lastNode = transform.gameObject;
 
 
-		//Nodes.Add (transform.gameObject);
+        Nodes.Add(transform.gameObject);
 
 
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
-	
-
-		//transform.position = Vector2.MoveTowards (transform.position,destiny,speed);
 
 
-
-
-		//if ((Vector2)transform.position != destiny) {
-
-		//	if (Vector2.Distance (player.transform.position, lastNode.transform.position) > distance) {
-
-
-		//		CreateNode ();
-
-		//	}
-
-
-		//} else if (done == false) {
-
-		//	done = true;
+        transform.position = Vector2.MoveTowards(transform.position, destiny, speed);
 
 
 
-		//	while(Vector2.Distance (player.transform.position, lastNode.transform.position) > distance)
-		//	{
-		//		CreateNode ();
-		//	}
+
+        if ((Vector2)transform.position != destiny)
+        {
+
+            if (Vector2.Distance(player.transform.position, lastNode.transform.position) > distance)
+            {
 
 
-		//	lastNode.GetComponent<HingeJoint2D> ().connectedBody = player.GetComponent<Rigidbody2D> ();
-		//}
+                CreateNode();
+
+            }
 
 
-		RenderLine ();
+        }
+        else if (done == false)
+        {
+
+            done = true;
+
+
+
+            while (Vector2.Distance(player.transform.position, lastNode.transform.position) > distance)
+            {
+                CreateNode();
+            }
+
+
+            lastNode.GetComponent<HingeJoint2D>().connectedBody = player.GetComponent<Rigidbody2D>();
+        }
+
+
+        RenderLine ();
 	}
 
 
