@@ -12,6 +12,7 @@ public class EnemyBase : MonoBehaviour
     public float AttackWindup = 0.5f;
     public float AttackTime = 0.2f;
     public float AttackCooldown = 0.3f;
+    public int Health = 3;
 
     protected Action _currentState = null;
     private float _attackTimeCounter = 0.0f;
@@ -25,6 +26,17 @@ public class EnemyBase : MonoBehaviour
     {
         _attackTimeCounter += Time.deltaTime;
         _currentState?.Invoke();
+    }
+
+    // return true if object is dead
+    public bool Damage()
+    {
+        this.Health--;
+        if(Health <= 0)
+        {
+            return true;
+        }
+        return false;
     }
 
     protected void IddleState()
