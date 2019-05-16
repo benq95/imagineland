@@ -34,6 +34,7 @@ public class EnemyBase : MonoBehaviour
         this.Health--;
         if(Health <= 0)
         {
+            Destroy(this.gameObject);
             return true;
         }
         return false;

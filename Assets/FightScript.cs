@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class FightScript : MonoBehaviour
 
 {
     private List<GameObject> enemiesUnderHit = new List<GameObject>();
+
+    private bool attackPressed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -16,13 +19,25 @@ public class FightScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Attack"))
+        if (Input.GetButtonDown("Attack") && (!this.attackPressed))
         {
+            this.attackPressed = true;
             Debug.Log("Attack");
             var enemiesToDestroy = new List<GameObject>();
-            foreach(var enemy in enemiesUnderHit)
+            var enemiesToHit = enemiesUnderHit.Distinct().ToList();
+            for (int i = 0; i < enemiesToHit.Count; i++)
             {
+                var enemy = enemiesUnderHit[i];
                 EnemyBase enemyComponent = enemy.GetComponent(typeof(EnemyBase)) as EnemyBase;
+                if(enemyComponent == null)
+                {
+                    var minotaurComponent = enemy.GetComponent(typeof(MinotaurBoss)) as MinotaurBoss;
+                    if (minotaurComponent.Damage())
+                    {
+                        //enemiesToDestroy.Add(enemy);
+                    }
+                    continue;
+                }
                 if(enemyComponent.Damage())
                 {
                     enemiesToDestroy.Add(enemy);
@@ -37,6 +52,10 @@ public class FightScript : MonoBehaviour
                     this.enemiesUnderHit.Remove(toDestroy);
                 }
             }
+        }
+        else if(Input.GetButtonUp("Attack"))
+        {
+            this.attackPressed = false;
         }
     }
 

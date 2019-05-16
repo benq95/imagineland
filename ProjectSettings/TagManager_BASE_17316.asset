@@ -3,11 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Enemy
-  - Collectable
-  - Terrain
-  - Spikes
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -44,19 +40,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Background
-    uniqueID: 433939955
-    locked: 0
-  - name: Foreground
-    uniqueID: 1256192741
-    locked: 0
-  - name: Collision
-    uniqueID: 926549325
-    locked: 0
-  - name: Characters
-    uniqueID: 270881859
-    locked: 0
-  - name: Frontmost
-    uniqueID: 3799513665
     locked: 0

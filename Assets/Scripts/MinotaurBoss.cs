@@ -221,7 +221,8 @@ public class MinotaurBoss : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "PlayerAttack")
+        return;
+        if (other.tag == "PlayerAttack")
         {
             if(_attackCoroutine != null)
             {
@@ -252,5 +253,41 @@ public class MinotaurBoss : MonoBehaviour
         {
             //Deal DMG to player
         }
+    }
+
+    // return true if object is dead
+    public bool Damage()
+    {
+        this.HP--;
+        if (_attackCoroutine != null)
+        {
+            StopCoroutine(_attackCoroutine);
+            _attackCoroutine = null;
+        }
+        _timeCounter = 0;
+        //Take DMG, move to next phase
+        switch (HP)
+        {
+            case 2:
+                _currentState = Phase2;
+                break;
+            case 1:
+                _animator.SetBool("Walk", true);
+                _currentState = Phase3;
+                break;
+            case 0:
+                GetComponent<Collider2D>().enabled = false;
+                //Death?.Invoke();
+                Destroy(this.gameObject);
+                break;
+            default:
+                _currentState = Phase3;
+                break;
+        }
+        if (HP <= 0)
+        {
+            return true;
+        }
+        return false;
     }
 }

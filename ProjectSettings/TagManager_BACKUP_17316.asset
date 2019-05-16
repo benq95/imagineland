@@ -4,10 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - Enemy
-  - Collectable
   - Terrain
-  - Spikes
+=======
+  - Collectable
+>>>>>>> 3fd3b0d48e511deb4ad76b05b0e1cf12ab35f5cb
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Player
   - 
   - 
   - 
@@ -46,17 +48,17 @@ TagManager:
     uniqueID: 0
     locked: 0
   - name: Background
-    uniqueID: 433939955
+    uniqueID: 1700783261
     locked: 0
   - name: Foreground
-    uniqueID: 1256192741
+    uniqueID: 1048963145
     locked: 0
   - name: Collision
-    uniqueID: 926549325
+    uniqueID: 3811931279
     locked: 0
   - name: Characters
-    uniqueID: 270881859
+    uniqueID: 2008477861
     locked: 0
   - name: Frontmost
-    uniqueID: 3799513665
+    uniqueID: 2056241679
     locked: 0
