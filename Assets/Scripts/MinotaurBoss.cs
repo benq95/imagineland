@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class MinotaurBoss : MonoBehaviour
 {
-    public Transform NeutralPosition;
-    public Transform VulnerablePosition;
+    public Transform[] NeutralToVulnerablePosition;
 
     public Transform AxePosition1;
     public Transform AxePosition2;
@@ -19,24 +19,22 @@ public class MinotaurBoss : MonoBehaviour
     public GameObject Player;
 
     public int HP = 3;
-    public event Action Death;
-
     public float PlayerDetectionDistance = 3.0f;
     public float Speed = 8.0f;
+    public float EnemyInvincibleTime = 2.0f;
 
     private Action _currentState = null;
     private float _timeCounter = 0.0f;
-    private Coroutine _attackCoroutine = null;
-
+    private Coroutine _coroutine = null;
     private Animator _animator;
 
+    private float _lastHitTime = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         _animator = GetComponent<Animator>();
         _currentState = Phase1;
-        _animator.SetBool("Walk", false);
     }
 
     // Update is called once per frame
@@ -46,21 +44,65 @@ public class MinotaurBoss : MonoBehaviour
         _currentState?.Invoke();
     }
 
+    private IEnumerator Movement(Transform[] transforms, Action endingDelegate)
+    {
+        _currentState = null;
+        _animator.SetTrigger("Jump");
+        for (int i = 0; i < (transforms.Length - 1); i++)
+        {
+            var transitionTime = 0.0f;
+            while (transitionTime < 1)
+            {
+                transform.position = Vector3.Lerp(transforms[i].position, transforms[i + 1].position, transitionTime);
+                yield return new WaitForSeconds(0.01f);
+                transitionTime += Time.deltaTime * Speed;
+            }
+            if(FloorCollider.IsActive)
+                _animator.SetTrigger("Land");
+        }
+        yield return new WaitForSeconds(2.0f);
+        if (endingDelegate != null)
+            _currentState = endingDelegate;
+        _timeCounter = 0.0f;
+        _coroutine = null;
+    }
+
+    private IEnumerator MoveToStartPosition(Transform startPos, Action endingDelegate)
+    {
+        _currentState = null;
+        transform.position = startPos.transform.position;
+        _animator.SetTrigger("Cheer");
+        yield return new WaitForSeconds(0.3f);
+        Player.GetComponent<Rigidbody2D>().AddForce(new Vector2(-15, 4) * 30);
+        yield return new WaitForSeconds(1.7f);
+
+        if (endingDelegate != null)
+        {
+            _currentState = endingDelegate;
+            _timeCounter = 0.0f;
+            _coroutine = null;
+        }
+    }
+
     private void Phase1()
     {
-        transform.position = Vector3.Lerp(transform.position, NeutralPosition.position, 0.05f * _timeCounter);
-        if (transform.position == NeutralPosition.position)
+        if (_coroutine == null)
         {
-            _currentState = Phase1Attack;
-            _timeCounter = 0.0f;
-        }
+            _coroutine = StartCoroutine(MoveToStartPosition(NeutralToVulnerablePosition[0], Phase1Attack));
+        };
+        //transform.position = Vector3.Lerp(transform.position, NeutralPosition.position, 0.05f * _timeCounter);
+        //if (transform.position == NeutralPosition.position)
+        //{
+        //    _currentState = Phase1Attack;
+        //    _timeCounter = 0.0f;
+        //}
     }
 
     private void Phase1Attack()
     {
-        if(_attackCoroutine == null)
+        if(_coroutine == null)
         {
-            _attackCoroutine = StartCoroutine(AttackSequenceP1());
+            _coroutine = StartCoroutine(AttackSequenceP1());
         }
     }
 
@@ -82,7 +124,7 @@ public class MinotaurBoss : MonoBehaviour
         yield return new WaitForSeconds(1);
         _currentState = Phase1Vulnerable;
         _timeCounter = 0.0f;
-        _attackCoroutine = null;
+        _coroutine = null;
     }
 
     private void ThrowAxeAtPlayer()
@@ -95,29 +137,45 @@ public class MinotaurBoss : MonoBehaviour
 
     private void Phase1Vulnerable()
     {
-        transform.position = Vector3.Lerp(transform.position, VulnerablePosition.position, 0.05f * _timeCounter);
-        if (_timeCounter > 5.0f)
+        if (_coroutine == null)
         {
-            _timeCounter = 0.0f;
-            _currentState = Phase1;
-        }
+            _coroutine = StartCoroutine(Movement(NeutralToVulnerablePosition, Phase1Return));
+        };
+        //transform.position = Vector3.Lerp(transform.position, VulnerablePosition.position, 0.05f * _timeCounter);
+        //if (_timeCounter > 5.0f)
+        //{
+        //    _timeCounter = 0.0f;
+        //    _currentState = Phase1;
+        //}
+    }
+
+    private void Phase1Return()
+    {
+        if (_coroutine == null)
+        {
+            _coroutine = StartCoroutine(Movement(NeutralToVulnerablePosition.Reverse().ToArray(), Phase1Attack));
+        };
     }
 
     private void Phase2()
     {
-        transform.position = Vector3.Lerp(transform.position, NeutralPosition.position, 0.05f * _timeCounter);
-        if (transform.position == NeutralPosition.position)
+        if (_coroutine == null)
         {
-            _currentState = Phase2Attack;
-            _timeCounter = 0.0f;
-        }
+            _coroutine = StartCoroutine(MoveToStartPosition(NeutralToVulnerablePosition[0], Phase2Attack));
+        };
+        //transform.position = Vector3.Lerp(transform.position, NeutralPosition.position, 0.05f * _timeCounter);
+        //if (transform.position == NeutralPosition.position)
+        //{
+        //    _currentState = Phase2Attack;
+        //    _timeCounter = 0.0f;
+        //}
     }
 
     private void Phase2Attack()
     {
-        if (_attackCoroutine == null)
+        if (_coroutine == null)
         {
-            _attackCoroutine = StartCoroutine(AttackSequenceP2());
+            _coroutine = StartCoroutine(AttackSequenceP2());
         }
     }
 
@@ -160,7 +218,7 @@ public class MinotaurBoss : MonoBehaviour
         }
         _currentState = Phase2Vulnerable;
         _timeCounter = 0.0f;
-        _attackCoroutine = null;
+        _coroutine = null;
     }
 
     private void ThrowAxeAtPosition(Transform position)
@@ -172,34 +230,39 @@ public class MinotaurBoss : MonoBehaviour
 
     private void Phase2Vulnerable()
     {
-        transform.position = Vector3.Lerp(transform.position, VulnerablePosition.position, 0.05f * _timeCounter);
-        if (_timeCounter > 5.0f)
+        if (_coroutine == null)
         {
-            _timeCounter = 0.0f;
-            _currentState = Phase2;
-        }
+            _coroutine = StartCoroutine(Movement(NeutralToVulnerablePosition, Phase2Return));
+        };
+    }
+
+    private void Phase2Return()
+    {
+        if (_coroutine == null)
+        {
+            _coroutine = StartCoroutine(Movement(NeutralToVulnerablePosition.Reverse().ToArray(), Phase2));
+        };
     }
 
     private void Phase3()
     {
-        transform.position = Vector3.Lerp(transform.position, VulnerablePosition.position, 0.05f * _timeCounter);
-        if (transform.position == VulnerablePosition.position)
+        if (_coroutine == null)
         {
-            _currentState = Phase3Attack;
-            _timeCounter = 0.0f;
-        }
+            _coroutine = StartCoroutine(MoveToStartPosition(NeutralToVulnerablePosition[NeutralToVulnerablePosition.Length - 1], Phase3Attack));
+        };
     }
 
     private void Phase3Attack()
     {
+        _animator.SetBool("Walk", true);
         var origin = transform.position;
         origin.y -= 1;
         var rch = Physics2D.Raycast(origin.ToVec2(), transform.right.ToVec2(), PlayerDetectionDistance, LayerMask.GetMask("Player"));
         Debug.DrawRay(origin, (transform.right * PlayerDetectionDistance));
         if (rch.collider != null)
         {
-            if (_attackCoroutine == null)
-                _attackCoroutine = StartCoroutine(AttackSequenceP3());
+            if (_coroutine == null)
+                _coroutine = StartCoroutine(AttackSequenceP3());
             return;
         }
         if (FloorCollider.IsActive && !WallCollider.IsActive)
@@ -216,7 +279,26 @@ public class MinotaurBoss : MonoBehaviour
         //DEAL DMG TO PLAYER
         _currentState = Phase3Attack;
         _timeCounter = 0.0f;
-        _attackCoroutine = null;
+        _coroutine = null;
+    }
+
+    private void Death()
+    {
+        _currentState = null;
+        if (_coroutine != null)
+        {
+            StopCoroutine(_coroutine);
+            _coroutine = null;
+        }
+        _coroutine = StartCoroutine(DeathCorutine());
+    }
+
+    private IEnumerator DeathCorutine()
+    {
+        _animator.SetTrigger("Death");
+        yield return new WaitForSeconds(5f);
+        _coroutine = null;
+        Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -224,12 +306,16 @@ public class MinotaurBoss : MonoBehaviour
         return;
         if (other.tag == "PlayerAttack")
         {
-            if(_attackCoroutine != null)
+            if ((_lastHitTime + 2.0f) > Time.time)
+                return;
+            _lastHitTime = Time.time;
+            if (_coroutine != null)
             {
-                StopCoroutine(_attackCoroutine);
-                _attackCoroutine = null;
+                StopCoroutine(_coroutine);
+                _coroutine = null;
             }
             _timeCounter = 0;
+            
             //Take DMG, move to next phase
             switch (--HP)
             {
@@ -237,12 +323,11 @@ public class MinotaurBoss : MonoBehaviour
                     _currentState = Phase2;
                     break;
                 case 1:
-                    _animator.SetBool("Walk", true);
                     _currentState = Phase3;
                     break;
                 case 0:
                     GetComponent<Collider2D>().enabled = false;
-                    Death?.Invoke();
+                    Death();
                     break;
                 default:
                     _currentState = Phase3;
