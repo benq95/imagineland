@@ -10,8 +10,8 @@ public class SpawnBranch : MonoBehaviour
     public float Width = 10.0f;
     public float SpawnTime = 0.5f;
 
-    float TimeToSpawnMixture = 1.0f;
-    float Time = 0;
+    float TimeToSpawnMixture;
+    float timer = 0;
     bool IsPlayerUnderBranches = false;
     Vector3 StartingPos = new Vector3(0,0,0);
     float StartRange, EndRange;
@@ -20,11 +20,12 @@ public class SpawnBranch : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Time = 0;
+        timer = 0;
+        int SpawnRandom = Random.Range(1, 5);
+        TimeToSpawnMixture = SpawnTime * SpawnRandom;
         StartingPos = transform.position - new Vector3(Width/2,0,0);
         StartRange = transform.position.x - Width / 2;
         EndRange =   transform.position.x + Width / 2;
-        StartCoroutine(BranchSpawner());
     }
 
 
@@ -33,6 +34,7 @@ public class SpawnBranch : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             IsPlayerUnderBranches = true;
+            StartCoroutine(BranchSpawner());
         }
 
     }
@@ -42,26 +44,24 @@ public class SpawnBranch : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             IsPlayerUnderBranches = false;
+            StopCoroutine(BranchSpawner());
         }
     }
 
     public IEnumerator BranchSpawner()
     {
-        bool spawn = true;
-
-        while (spawn)
+        while (IsPlayerUnderBranches)
         {
             StartingPos = new Vector3(Random.Range(StartRange, EndRange), StartingPos.y, StartingPos.z);
-            if (IsPlayerUnderBranches)
-            {
-                if(Time == TimeToSpawnMixture)
-                    Instantiate(HealthMixture, StartingPos, Quaternion.identity);
-                else
-                    Instantiate(Branch, StartingPos, Quaternion.identity);
 
-                Time += SpawnTime;
-                yield return new WaitForSeconds(SpawnTime);
-            }
+            if (timer == TimeToSpawnMixture)
+                Instantiate(HealthMixture, StartingPos, Quaternion.identity);
+            else
+                Instantiate(Branch, StartingPos, Quaternion.identity);
+
+            timer += SpawnTime;
+
+            yield return new WaitForSeconds(SpawnTime);
         }
     }
 
