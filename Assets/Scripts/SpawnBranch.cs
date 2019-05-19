@@ -6,11 +6,13 @@ public class SpawnBranch : MonoBehaviour
 {
     public GameObject Branch;
     public GameObject HealthMixture;
+    public GameObject Bomb; 
 
     public float Width = 10.0f;
     public float SpawnTime = 0.5f;
 
     float TimeToSpawnMixture;
+    float TimeToSpawnBomb;
     float timer = 0;
     bool IsPlayerUnderBranches = false;
     Vector3 StartingPos = new Vector3(0,0,0);
@@ -20,9 +22,10 @@ public class SpawnBranch : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timer = 0;
         int SpawnRandom = Random.Range(1, 5);
         TimeToSpawnMixture = SpawnTime * SpawnRandom;
+        TimeToSpawnBomb = SpawnTime * (SpawnRandom + 1);
+
         StartingPos = transform.position - new Vector3(Width/2,0,0);
         StartRange = transform.position.x - Width / 2;
         EndRange =   transform.position.x + Width / 2;
@@ -56,7 +59,9 @@ public class SpawnBranch : MonoBehaviour
 
             if (timer == TimeToSpawnMixture)
                 Instantiate(HealthMixture, StartingPos, Quaternion.identity);
-            else
+            else if (timer == TimeToSpawnBomb)
+                Instantiate(Bomb, StartingPos, Quaternion.identity);
+            else 
                 Instantiate(Branch, StartingPos, Quaternion.identity);
 
             timer += SpawnTime;
