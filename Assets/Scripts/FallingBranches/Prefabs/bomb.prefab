@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d84cf0ceb789004d9e2e700dd547b85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionForce: 40
+  explosionForce: 50
 --- !u!114 &2237908453431940295
 MonoBehaviour:
   m_ObjectHideFlags: 0

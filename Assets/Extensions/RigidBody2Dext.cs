@@ -18,7 +18,7 @@ public static class RigidBody2Dext
             explosionDir.y += upwardsModifier;
             explosionDir.Normalize();
         }
-
-        rb.AddForce(Mathf.Lerp(0, explosionForce, (1 - explosionDistance)) * explosionDir, mode);
+        Vector2 ForceToApply = Mathf.Lerp(0, explosionForce, (1 - explosionDistance)) * explosionDir;
+        rb.AddForce(new Vector2(explosionForce, 0) * explosionDir, mode);
     }
 }
