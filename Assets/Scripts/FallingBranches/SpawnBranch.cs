@@ -7,10 +7,9 @@ public class SpawnBranch : MonoBehaviour
     public GameObject Branch;
     public GameObject HealthMixture;
     public GameObject Bomb; 
-
-    public float Width = 10.0f;
     public float SpawnTime = 0.5f;
 
+    float Width = 10.0f;
     float TimeToSpawnMixture;
     float TimeToSpawnBomb;
     float timer = 0;
@@ -30,7 +29,6 @@ public class SpawnBranch : MonoBehaviour
         float OffsetY = 1;
         StartingPos.y -= OffsetY;
         Width = transform.localScale.x;
-        print(Width);
         StartRange = transform.position.x - Width / 2;
         EndRange =   transform.position.x + Width / 2;
     }

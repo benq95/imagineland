@@ -5,12 +5,19 @@ using UnityEngine;
 public class ForceField : MonoBehaviour
 {
     public float fieldForce = 50.0f;
+    Rigidbody2D rigidbody2d;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
+    {
+        
+        rigidbody2d = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
     {
         StartCoroutine(ProtectingForceField());
     }
-
     private IEnumerator ProtectingForceField()
     {
         bool IsSearching = true;
@@ -43,5 +50,10 @@ public class ForceField : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
 
+    }
+
+    public void Launch(Vector2 direction, float force)
+    {
+        rigidbody2d.AddForce(direction * force);
     }
 }
