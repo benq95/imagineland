@@ -27,6 +27,10 @@ public class SpawnBranch : MonoBehaviour
         TimeToSpawnBomb = SpawnTime * (SpawnRandom + 1);
 
         StartingPos = transform.position - new Vector3(Width/2,0,0);
+        float OffsetY = 1;
+        StartingPos.y -= OffsetY;
+        Width = transform.localScale.x;
+        print(Width);
         StartRange = transform.position.x - Width / 2;
         EndRange =   transform.position.x + Width / 2;
     }

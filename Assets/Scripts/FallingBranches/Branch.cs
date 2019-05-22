@@ -23,10 +23,9 @@ public class Branch : MonoBehaviour
             GameManager.instance.healths--;
             print("playerhealths: " + GameManager.instance.healths);
             Destroy(gameObject);
-            //GetComponent<Rigidbody2D>().AddForce(new Vector2(50.0f, 50.0f), ForceMode2D.Impulse);
         }
 
-        if (collision.gameObject.tag == "Terrainn") //TODO change to Terrain
+        if (collision.gameObject.tag == "Terrain") //TODO change to Terrain
         {
             Destroy(gameObject);
         }

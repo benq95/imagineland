@@ -29,9 +29,13 @@ public class Bomb : MonoBehaviour
             {
                 ChildGameObject.SetActive(true);
                 GetComponentInChildren<ParticleSystem>().Play();
-                IsPlaying = true;
-            }
 
+            }
+            if(timer > ExplodeTime + 1.0f)
+            {
+                IsPlaying = true;
+                Destroy(gameObject);
+            }
         }
 
     }
