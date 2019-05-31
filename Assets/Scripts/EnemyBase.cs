@@ -16,9 +16,14 @@ public class EnemyBase : MonoBehaviour
 
     protected Action _currentState = null;
     private float _attackTimeCounter = 0.0f;
+    private Coroutine _coroutine = null;
+
+    private Animator _animator;
 
     void Start()
     {
+        _animator = GetComponent<Animator>();
+        _animator.SetBool("Walk", true);
         _currentState = IddleState;
     }
 
@@ -58,20 +63,21 @@ public class EnemyBase : MonoBehaviour
 
     protected void AttackState()
     {
-        if (_attackTimeCounter > (AttackCooldown + AttackTime + AttackWindup))
-            //Return to "normal" state
-            _currentState = IddleState;
-        else if (_attackTimeCounter > (AttackTime + AttackWindup))
+        if (_coroutine == null)
         {
-            //Attack cooldown
-        }
-        else if (_attackTimeCounter > AttackWindup)
-        {
-            //Attack happening
-        }
-        else
-        {
-            //Attack windup
-        }
+            _coroutine = StartCoroutine(Attack());
+        };
+    }
+
+    private IEnumerator Attack()
+    {
+        _currentState = null;
+        _animator.SetBool("Walk", false);
+        _animator.SetTrigger("Attack");
+        yield return new WaitForSeconds(1.5f);
+
+        _currentState = IddleState;
+        _animator.SetBool("Walk", true);
+        _coroutine = null;
     }
 }

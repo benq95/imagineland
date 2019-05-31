@@ -344,10 +344,10 @@ public class MinotaurBoss : MonoBehaviour
     public bool Damage()
     {
         this.HP--;
-        if (_attackCoroutine != null)
+        if (_coroutine != null)
         {
-            StopCoroutine(_attackCoroutine);
-            _attackCoroutine = null;
+            StopCoroutine(_coroutine);
+            _coroutine = null;
         }
         _timeCounter = 0;
         //Take DMG, move to next phase
