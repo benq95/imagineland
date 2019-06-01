@@ -4,18 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class MinotaurBoss : MonoBehaviour
+public class CapitanBoss : MonoBehaviour
 {
     public Transform[] NeutralToVulnerablePosition;
 
-    public Transform AxePosition1;
-    public Transform AxePosition2;
-    public Transform AxePosition3;
+    public Transform PirateSpawnPosition1;
+    public Transform PirateSpawnPosition2;
 
     public TerrainTrigger FloorCollider;
     public TerrainTrigger WallCollider;
 
-    public GameObject Axe;
+    public GameObject Bomb;
+    public GameObject Pirate;
     public GameObject Player;
 
     public int HP = 3;
@@ -34,7 +34,7 @@ public class MinotaurBoss : MonoBehaviour
     void Start()
     {
         _animator = GetComponent<Animator>();
-        _currentState = Phase1;
+        _currentState = Phase2;
     }
 
     // Update is called once per frame
@@ -57,7 +57,7 @@ public class MinotaurBoss : MonoBehaviour
                 yield return new WaitForSeconds(0.01f);
                 transitionTime += Time.deltaTime * Speed;
             }
-            if(FloorCollider.IsActive)
+            if (FloorCollider.IsActive)
                 _animator.SetTrigger("Land");
         }
         yield return new WaitForSeconds(2.0f);
@@ -94,7 +94,7 @@ public class MinotaurBoss : MonoBehaviour
 
     private void Phase1Attack()
     {
-        if(_coroutine == null)
+        if (_coroutine == null)
         {
             _coroutine = StartCoroutine(AttackSequenceP1());
         }
@@ -123,8 +123,8 @@ public class MinotaurBoss : MonoBehaviour
 
     private void ThrowAxeAtPlayer()
     {
-        
-        var axe = Instantiate(Axe);
+
+        var axe = Instantiate(Bomb);
         axe.transform.position = transform.position;
         axe.GetComponent<Rigidbody2D>().AddForce((Player.transform.position.ToVec2() - transform.position.ToVec2() + new Vector2(0.0f, 2.5f)) * 50);
     }
@@ -164,39 +164,15 @@ public class MinotaurBoss : MonoBehaviour
     private IEnumerator AttackSequenceP2()
     {
         _currentState = null;
+        _animator.SetTrigger("Cheer");
         yield return new WaitForSeconds(0.5f);
-        for(int i = 0; i < 3; i++)
+        GameObject pirate1 = Instantiate(Pirate, PirateSpawnPosition1.position, transform.rotation);
+        GameObject pirate2 = Instantiate(Pirate, PirateSpawnPosition2.position, transform.rotation);
+        while (true)
         {
-            List<int> positionList = new List<int> { 0, 1, 2 };
-            for(int j = 0; j < 3; j++)
-            {
-                int index = 0;
-                if(positionList.Count > 1)
-                {
-                    index = (int)UnityEngine.Random.Range(0.0f, (float)positionList.Count - 0.001f);
-                }
-                int positionIndex = positionList[index];
-                _animator.SetTrigger("Throw");
-                yield return new WaitForSeconds(0.5f);
-                //Throw an axe at position
-                switch (positionIndex)
-                {
-                    case 0:
-                        ThrowAtPosition(AxePosition1);
-                        break;
-                    case 1:
-                        ThrowAtPosition(AxePosition2);
-                        break;
-                    case 2:
-                        ThrowAtPosition(AxePosition3);
-                        break;
-                    default:
-                        break;
-                }
-                positionList.RemoveAt(index);
-                yield return new WaitForSeconds(1.0f);
-            }
-            yield return new WaitForSeconds(3);
+            if ((pirate1 == null) && (pirate2 == null))
+                break;
+            yield return new WaitForSeconds(0.5f);
         }
         _currentState = Phase2Vulnerable;
         _timeCounter = 0.0f;
@@ -205,7 +181,7 @@ public class MinotaurBoss : MonoBehaviour
 
     private void ThrowAtPosition(Transform position)
     {
-        var axe = Instantiate(Axe);
+        var axe = Instantiate(Bomb);
         axe.transform.position = transform.position;
         axe.GetComponent<Rigidbody2D>().AddForce((position.position.ToVec2() - transform.position.ToVec2() + new Vector2(0.0f, 9f)) * 25);
     }

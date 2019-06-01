@@ -9,14 +9,18 @@ public class ExplodingBombController : MonoBehaviour
     public float BombExplosionTime = 1.0f;
 
     private Animator _animator = null;
+    private Rigidbody2D _rigidbody = null;
+    private BoxCollider2D _collider = null;
     private GameObject _player = null;
-    public float _time;
+    private float _time;
     private Coroutine _explosionCoroutine = null;
 
     // Start is called before the first frame update
     void Start()
     {
         _animator = GetComponent<Animator>();
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<BoxCollider2D>();
         _player = GameObject.FindGameObjectWithTag("Player");
         _time = 0.0f;
     }
@@ -48,6 +52,8 @@ public class ExplodingBombController : MonoBehaviour
     private IEnumerator Explode()
     {
         _animator.SetTrigger("Explode");
+        Destroy(_collider);
+        Destroy(_rigidbody);
         if(_player != null)
         {
             if(Vector3.Distance(transform.position, _player.transform.position) < DamageDistance)
