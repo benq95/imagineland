@@ -9,7 +9,7 @@ public class TerrainTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag != "Player")
+        if ((collision.tag != "Player") && (collision.tag != "Junk"))
         {
             IsActive = true;
             _enteredTerrains++;
@@ -18,7 +18,7 @@ public class TerrainTrigger : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag != "Player")
+        if ((collision.tag != "Player") && (collision.tag != "Junk"))
             _enteredTerrains--;
         if (_enteredTerrains == 0)
             IsActive = false;

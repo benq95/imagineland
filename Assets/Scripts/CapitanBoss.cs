@@ -34,7 +34,7 @@ public class CapitanBoss : MonoBehaviour
     void Start()
     {
         _animator = GetComponent<Animator>();
-        _currentState = Phase2;
+        _currentState = Phase1;
     }
 
     // Update is called once per frame
@@ -57,9 +57,8 @@ public class CapitanBoss : MonoBehaviour
                 yield return new WaitForSeconds(0.01f);
                 transitionTime += Time.deltaTime * Speed;
             }
-            if (FloorCollider.IsActive)
-                _animator.SetTrigger("Land");
         }
+        _animator.SetTrigger("Land");
         yield return new WaitForSeconds(2.0f);
         if (endingDelegate != null)
             _currentState = endingDelegate;
