@@ -20,10 +20,10 @@ public class PlayerUnderwaterScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            this.transform.Rotate(0, 0, 1);
+            this.transform.Rotate(0, 0, 2);
         } else if (Input.GetKey(KeyCode.RightArrow))
         {
-            this.transform.Rotate(0, 0, -1);
+            this.transform.Rotate(0, 0, -2);
         }
 
         if (Input.GetKey(KeyCode.UpArrow))

@@ -202,6 +202,7 @@ GameObject:
   - component: {fileID: 245324346}
   - component: {fileID: 245324345}
   - component: {fileID: 245324344}
+  - component: {fileID: 245324347}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -266,13 +267,27 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 245324343}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.04113, y: 0.37166214, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &245324347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245324343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adee6699950d4ed4b82fce553c2a93e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1227687613}
+  cameraDistance: 30
 --- !u!1 &1227687610
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,6 +300,7 @@ GameObject:
   - component: {fileID: 1227687612}
   - component: {fileID: 1227687611}
   - component: {fileID: 1227687614}
+  - component: {fileID: 1227687615}
   m_Layer: 0
   m_Name: PlayerUnderwaterPlaceholder
   m_TagString: Untagged
@@ -366,7 +382,7 @@ Transform:
   m_Children:
   - {fileID: 109441559}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1227687614
 Rigidbody2D:
@@ -389,3 +405,32 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!60 &1227687615
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227687610}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.5, y: -0.5}
+      - {x: -0.5, y: 0.5}
+      - {x: 0.5, y: 0.5}
+      - {x: 0.5, y: -0.5}
