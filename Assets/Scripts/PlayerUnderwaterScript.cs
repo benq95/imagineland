@@ -8,6 +8,7 @@ public class PlayerUnderwaterScript : MonoBehaviour
     private Rigidbody2D rigidbody2D;
     private Vector2 directionVector;
     [SerializeField] private GameObject direction;
+    [SerializeField] private int speed;
 
     // Start is called before the first frame update
     void Start()
@@ -17,25 +18,21 @@ public class PlayerUnderwaterScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {        
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            this.transform.Rotate(0, 0, 2);
+            rigidbody2D.AddForce(Vector2.left*speed);
         } else if (Input.GetKey(KeyCode.RightArrow))
         {
-            this.transform.Rotate(0, 0, -2);
+            rigidbody2D.AddForce(Vector2.right * speed);
         }
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            directionVector = direction.transform.position - this.transform.position;
-            directionVector.Normalize();
-            rigidbody2D.AddForce(directionVector);
+            rigidbody2D.AddForce(Vector2.up * speed);
         } else if (Input.GetKey(KeyCode.DownArrow))
         {
-            directionVector = this.transform.position - direction.transform.position;
-            directionVector.Normalize();
-            rigidbody2D.AddForce(directionVector);
+            rigidbody2D.AddForce(Vector2.down*speed);
         }
 
     }
