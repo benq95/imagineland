@@ -39,7 +39,7 @@ public class WhaleBoss : MonoBehaviour
     void Start()
     {
         _animator = GetComponent<Animator>();
-        _currentState = Phase2;
+        _currentState = Phase3;
     }
 
     // Update is called once per frame
@@ -107,7 +107,7 @@ public class WhaleBoss : MonoBehaviour
         {
             LastSpitIndex++;
         }
-        else if(LastSpitIndex == SpitPositions.Length)
+        else if(LastSpitIndex == (SpitPositions.Length - 1))
         {
             LastSpitIndex--;
         }
