@@ -23,6 +23,9 @@ public class FightScript : MonoBehaviour
         {
             this.attackPressed = true;
             Debug.Log("Attack");
+
+            this.GetComponent<Animator>().SetTrigger("Attack");
+
             var enemiesToDestroy = new List<GameObject>();
             var enemiesToHit = enemiesUnderHit.Distinct().ToList();
             for (int i = 0; i < enemiesToHit.Count; i++)
