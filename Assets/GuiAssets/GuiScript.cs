@@ -7,12 +7,13 @@ public class GuiScript : MonoBehaviour
 {
 
     string[] levelNames = new string[] { "Dark forest", "Pirates of the caribbean", "Ocean" };
+    string[] levelScenesNames = new string[] { "DarkForest", "DarkForest", "Underwater" };
     private GameObject level;
     private GameObject leftButton;
     private GameObject rightButton;
     private Text text;
     private GameObject levelText;
-    private int actualLevel = 1;
+    private int actualLevel = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +68,7 @@ public class GuiScript : MonoBehaviour
 
     public void startGame()
     {
+        Application.LoadLevel(levelScenesNames[actualLevel]);
         Debug.Log("start game clicked");
     }
     public void exitGame()
