@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class CapitanBoss : MonoBehaviour
+public class CapitanBoss : DealDamageBase
 {
     public Transform[] NeutralToVulnerablePosition;
 
@@ -259,7 +259,7 @@ public class CapitanBoss : MonoBehaviour
     }
 
     // return true if object is dead
-    public bool Damage()
+    public override bool Damage()
     {
         this.HP--;
         if (_coroutine != null)
@@ -280,8 +280,7 @@ public class CapitanBoss : MonoBehaviour
                 break;
             case 0:
                 GetComponent<Collider2D>().enabled = false;
-                //Death?.Invoke();
-                Destroy(this.gameObject);
+                Death();
                 break;
             default:
                 _currentState = Phase3;

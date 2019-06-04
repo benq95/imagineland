@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnderwaterEnemy : MonoBehaviour
+public class UnderwaterEnemy : DealDamageBase
 {
     public TerrainTrigger WallCollider;
     public float Speed = 2.0f;
@@ -37,7 +37,7 @@ public class UnderwaterEnemy : MonoBehaviour
     }
 
     // return true if object is dead
-    public bool Damage()
+    public override bool Damage()
     {
         this.Health--;
         if (Health <= 0)

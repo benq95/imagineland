@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class MinotaurBoss : MonoBehaviour
+public class MinotaurBoss : DealDamageBase
 {
     public Transform[] NeutralToVulnerablePosition;
 
@@ -283,7 +283,7 @@ public class MinotaurBoss : MonoBehaviour
     }
 
     // return true if object is dead
-    public bool Damage()
+    public override bool Damage()
     {
         this.HP--;
         if (_coroutine != null)
@@ -304,8 +304,7 @@ public class MinotaurBoss : MonoBehaviour
                 break;
             case 0:
                 GetComponent<Collider2D>().enabled = false;
-                //Death?.Invoke();
-                Destroy(this.gameObject);
+                Death();
                 break;
             default:
                 _currentState = Phase3;

@@ -23,34 +23,17 @@ public class FightScript : MonoBehaviour
         {
             this.attackPressed = true;
             Debug.Log("Attack");
-            var enemiesToDestroy = new List<GameObject>();
             var enemiesToHit = enemiesUnderHit.Distinct().ToList();
+            Debug.Log(enemiesToHit.Count);
             for (int i = 0; i < enemiesToHit.Count; i++)
             {
                 var enemy = enemiesUnderHit[i];
-                EnemyBase enemyComponent = enemy.GetComponent(typeof(EnemyBase)) as EnemyBase;
+                DealDamageBase enemyComponent = enemy.GetComponentInParent<DealDamageBase>(); 
                 if(enemyComponent == null)
                 {
-                    var minotaurComponent = enemy.GetComponent(typeof(MinotaurBoss)) as MinotaurBoss;
-                    if (minotaurComponent.Damage())
-                    {
-                        //enemiesToDestroy.Add(enemy);
-                    }
                     continue;
                 }
-                if(enemyComponent.Damage())
-                {
-                    enemiesToDestroy.Add(enemy);
-                }
-            }
-            for(int i = 0; i < enemiesToDestroy.Count; i++)
-            {
-                var toDestroy = enemiesToDestroy[i];
-                Destroy(toDestroy);
-                if(this.enemiesUnderHit.Contains(toDestroy))
-                {
-                    this.enemiesUnderHit.Remove(toDestroy);
-                }
+                enemyComponent.Damage();
             }
         }
         else if(Input.GetButtonUp("Attack"))

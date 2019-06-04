@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 4797719513832026162}
   m_Layer: 0
   m_Name: WhaleBoss
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,7 +117,6 @@ MonoBehaviour:
   LastSpitIndex: 3
   SpitForce: 100
   DropPositions: []
-  LastDropIndex: 0
   JunkToThrow:
   - {fileID: 6497226864384918469, guid: e9e6b8821a698a14a98c46c175bb0827, type: 3}
   - {fileID: 9172508337543137498, guid: 80272979389a24746a43433382f81592, type: 3}
