@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df12a00fcbc656a44a6be604b68f7ece, type: 3}
+  m_Name: Forest_1
+  m_EditorClassIdentifier: 
+  description: First panel
+  photo: {fileID: 21300000, guid: df0fe9ca01f538642b2cbd847aeeef73, type: 3}
+  nextStoryData: {fileID: 11400000, guid: 734f2af27203f04449520714ccbb4878, type: 2}

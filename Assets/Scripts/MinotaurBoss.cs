@@ -256,8 +256,14 @@ public class MinotaurBoss : DealDamageBase
     {
         _currentState = null;
         _animator.SetTrigger("Attack");
-        yield return new WaitForSeconds(1.31f);
-        //DEAL DMG TO PLAYER
+        yield return new WaitForSeconds(0.3f);
+        var rch = Physics2D.Raycast(transform.position.ToVec2(), transform.right.ToVec2(), PlayerDetectionDistance, LayerMask.GetMask("Player"));
+        Debug.DrawRay(transform.position, (transform.right * PlayerDetectionDistance));
+        if (rch.collider != null)
+        {
+            rch.collider.GetComponentInParent<FightScript>().DealDamage();
+        }
+        yield return new WaitForSeconds(1.01f);
         _currentState = Phase3Attack;
         _timeCounter = 0.0f;
         _coroutine = null;
@@ -277,9 +283,11 @@ public class MinotaurBoss : DealDamageBase
     private IEnumerator DeathCorutine()
     {
         _animator.SetTrigger("Death");
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(10f);
         _coroutine = null;
+        Application.LoadLevel("PirateShip");
         Destroy(this.gameObject);
+
     }
 
     // return true if object is dead

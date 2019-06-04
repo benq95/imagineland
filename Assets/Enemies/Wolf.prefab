@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7110699619754944800}
   - component: {fileID: 8618224299898953378}
   m_Layer: 0
-  m_Name: BaseEnemy
+  m_Name: Wolf
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 270881859
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5d5195a46ed9feb44989ee07f832e568, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -100,7 +100,7 @@ MonoBehaviour:
   FloorCollider: {fileID: 1353163017189441915}
   WallCollider: {fileID: 8429338865366609929}
   Speed: 6
-  PlayerDetectionDistance: 2
+  PlayerDetectionDistance: 0.5
   AttackWindup: 0.5
   AttackTime: 0.2
   AttackCooldown: 0.3

@@ -8,7 +8,7 @@ public class GuiScript : MonoBehaviour
 {
 
     string[] levelNames = new string[] { "Dark forest", "Pirates of the caribbean", "Ocean" };
-    string[] levelScenesNames = new string[] { "DarkForest", "DarkForest", "Underwater" };
+    string[] levelScenesNames = new string[] { "DarkForest", "PirateShip", "Underwater" };
     private GameObject level;
     private GameObject leftButton;
     private GameObject rightButton;
