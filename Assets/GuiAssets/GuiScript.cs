@@ -71,6 +71,7 @@ public class GuiScript : MonoBehaviour
     }
     public void exitGame()
     {
+        Application.Quit();
         Debug.Log("exit game clicked");
     }
 }
