@@ -6,8 +6,8 @@ public class PlayerUnderwaterScript : MonoBehaviour
 {
 
     private Rigidbody2D rigidbody2D;
-    private Vector2 directionVector;
-    [SerializeField] private GameObject direction;
+    private float shootTime = 0;
+    [SerializeField] private GameObject bullet;
     [SerializeField] private int speed;
 
     // Start is called before the first frame update
@@ -34,6 +34,17 @@ public class PlayerUnderwaterScript : MonoBehaviour
         {
             rigidbody2D.AddForce(Vector2.down*speed);
         }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            if (shootTime > 5)
+            {
+                GameObject tmp = Instantiate(bullet, this.transform.position, this.transform.rotation, this.transform);
+                tmp.GetComponent<Rigidbody2D>().AddForce(Vector2.right * 10);
+                shootTime = 0;
+            }
+        }
+        shootTime += 0.1f;
 
     }
     
