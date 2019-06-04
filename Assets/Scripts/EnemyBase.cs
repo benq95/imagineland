@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBase : MonoBehaviour
+public class EnemyBase : DealDamageBase
 {
     public TerrainTrigger FloorCollider;
     public TerrainTrigger WallCollider;
@@ -34,7 +34,7 @@ public class EnemyBase : MonoBehaviour
     }
 
     // return true if object is dead
-    public bool Damage()
+    public override bool Damage()
     {
         this.Health--;
         if(Health <= 0)
