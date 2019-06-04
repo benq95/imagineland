@@ -72,6 +72,16 @@ PrefabInstance:
       propertyPath: m_Simulated
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5960340186242523122, guid: 8389eecf443aae8468d3641159c387f0,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 270881859
+      objectReference: {fileID: 0}
+    - target: {fileID: 5960340186242523122, guid: 8389eecf443aae8468d3641159c387f0,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8188670160351961457, guid: 8389eecf443aae8468d3641159c387f0,
         type: 3}
       propertyPath: MovementDirection.x

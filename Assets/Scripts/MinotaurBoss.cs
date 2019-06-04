@@ -264,7 +264,6 @@ public class MinotaurBoss : DealDamageBase
             rch.collider.GetComponentInParent<FightScript>().DealDamage();
         }
         yield return new WaitForSeconds(1.01f);
-        //DEAL DMG TO PLAYER
         _currentState = Phase3Attack;
         _timeCounter = 0.0f;
         _coroutine = null;
@@ -284,9 +283,11 @@ public class MinotaurBoss : DealDamageBase
     private IEnumerator DeathCorutine()
     {
         _animator.SetTrigger("Death");
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(10f);
         _coroutine = null;
+        Application.LoadLevel("PirateShip");
         Destroy(this.gameObject);
+
     }
 
     // return true if object is dead
