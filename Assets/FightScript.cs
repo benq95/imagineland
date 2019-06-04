@@ -14,6 +14,8 @@ public class FightScript : MonoBehaviour
 
     public int Health = 3;
 
+    public List<GameObject> hearts;
+
     private List<GameObject> enemiesUnderHit = new List<GameObject>();
 
     private bool attackPressed = false;
@@ -77,6 +79,7 @@ public class FightScript : MonoBehaviour
     public void DealDamage()
     {
         this.Health--;
+        this.hearts[Health].SetActive(false);
         source.PlayOneShot(hurtedSound);
         if (Health <= 0)
         {
