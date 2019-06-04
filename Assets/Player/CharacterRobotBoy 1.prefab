@@ -195,6 +195,7 @@ MonoBehaviour:
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 4294967295
+  jumpSound: {fileID: 8300000, guid: 9b8348a619e66f94085eed30e37bd3fd, type: 3}
 --- !u!114 &3034377350071991479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,6 +248,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hook: {fileID: 1000012688847204, guid: ddbf897f9a3f2a04c82360e94d84e7d1, type: 3}
   position: {x: 0, y: 0}
+  throwhookSound: {fileID: 8300000, guid: 81e0bc640323f4f4e8b97a955547d2a4, type: 3}
+  releasehookSound: {fileID: 8300000, guid: bb48386dc0d8066449c03e981152f8c1, type: 3}
   ropeActive: 0
   canHook: 0
 --- !u!61 &1706819629
@@ -287,6 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed64d0c253fe2b34d8862b66c49d9652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackSound: {fileID: 8300000, guid: 50cca42aa13c0e54189418893767cbf2, type: 3}
 --- !u!1 &3034377350065441111
 GameObject:
   m_ObjectHideFlags: 0

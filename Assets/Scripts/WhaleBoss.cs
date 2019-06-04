@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class WhaleBoss : MonoBehaviour
+public class WhaleBoss : DealDamageBase
 {
     public Transform[] SpitPositions;
     public int LastSpitIndex = 0;
@@ -39,7 +39,7 @@ public class WhaleBoss : MonoBehaviour
     void Start()
     {
         _animator = GetComponent<Animator>();
-        _currentState = Phase3;
+        _currentState = Phase1;
     }
 
     // Update is called once per frame
@@ -248,8 +248,9 @@ public class WhaleBoss : MonoBehaviour
     }
 
     // return true if object is dead
-    public bool Damage()
+    public override bool Damage()
     {
+        Debug.Log("Got hit");
         this.HP--;
         if (_coroutine != null)
         {
@@ -268,7 +269,7 @@ public class WhaleBoss : MonoBehaviour
                 break;
             case 0:
                 GetComponent<Collider2D>().enabled = false;
-                Destroy(this.gameObject);
+                Death();
                 break;
             default:
                 _currentState = Phase3;

@@ -6,6 +6,10 @@ using System.Linq;
 public class FightScript : MonoBehaviour
 
 {
+    private AudioSource source;
+    public AudioClip attackSound;
+    public int Health = 3;
+
     private List<GameObject> enemiesUnderHit = new List<GameObject>();
 
     private bool attackPressed = false;
@@ -13,7 +17,7 @@ public class FightScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -21,36 +25,24 @@ public class FightScript : MonoBehaviour
     {
         if (Input.GetButtonDown("Attack") && (!this.attackPressed))
         {
+            source.PlayOneShot(attackSound);
             this.attackPressed = true;
             Debug.Log("Attack");
+
+            this.GetComponent<Animator>().SetTrigger("Attack");
+
             var enemiesToDestroy = new List<GameObject>();
             var enemiesToHit = enemiesUnderHit.Distinct().ToList();
+            Debug.Log(enemiesToHit.Count);
             for (int i = 0; i < enemiesToHit.Count; i++)
             {
                 var enemy = enemiesUnderHit[i];
-                EnemyBase enemyComponent = enemy.GetComponent(typeof(EnemyBase)) as EnemyBase;
+                DealDamageBase enemyComponent = enemy.GetComponentInParent<DealDamageBase>(); 
                 if(enemyComponent == null)
                 {
-                    var minotaurComponent = enemy.GetComponent(typeof(MinotaurBoss)) as MinotaurBoss;
-                    if (minotaurComponent.Damage())
-                    {
-                        //enemiesToDestroy.Add(enemy);
-                    }
                     continue;
                 }
-                if(enemyComponent.Damage())
-                {
-                    enemiesToDestroy.Add(enemy);
-                }
-            }
-            for(int i = 0; i < enemiesToDestroy.Count; i++)
-            {
-                var toDestroy = enemiesToDestroy[i];
-                Destroy(toDestroy);
-                if(this.enemiesUnderHit.Contains(toDestroy))
-                {
-                    this.enemiesUnderHit.Remove(toDestroy);
-                }
+                enemyComponent.Damage();
             }
         }
         else if(Input.GetButtonUp("Attack"))
@@ -75,5 +67,19 @@ public class FightScript : MonoBehaviour
             Debug.Log("Enemy leave fight collider.");
             enemiesUnderHit.Remove(col.gameObject);
         }
+    }
+
+    public void DealDamage()
+    {
+        this.Health--;
+        if(Health <= 0)
+        {
+            Die();
+        }
+    }
+
+    protected void Die()
+    {
+        Destroy(this.gameObject);
     }
 }
