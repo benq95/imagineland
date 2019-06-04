@@ -8,6 +8,9 @@ public class FightScript : MonoBehaviour
 {
     private AudioSource source;
     public AudioClip attackSound;
+    public AudioClip hurtedSound;
+    public AudioClip dieSound;
+
     public int Health = 3;
 
     private List<GameObject> enemiesUnderHit = new List<GameObject>();
@@ -49,6 +52,7 @@ public class FightScript : MonoBehaviour
         {
             this.attackPressed = false;
         }
+        
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -72,14 +76,17 @@ public class FightScript : MonoBehaviour
     public void DealDamage()
     {
         this.Health--;
-        if(Health <= 0)
+        source.PlayOneShot(hurtedSound);
+        if (Health <= 0)
         {
+     
             Die();
         }
     }
 
     protected void Die()
     {
+        source.PlayOneShot(dieSound);
         Destroy(this.gameObject);
     }
 }
