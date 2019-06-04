@@ -6,6 +6,8 @@ using System.Linq;
 public class FightScript : MonoBehaviour
 
 {
+    public int Health = 3;
+
     private List<GameObject> enemiesUnderHit = new List<GameObject>();
 
     private bool attackPressed = false;
@@ -78,5 +80,19 @@ public class FightScript : MonoBehaviour
             Debug.Log("Enemy leave fight collider.");
             enemiesUnderHit.Remove(col.gameObject);
         }
+    }
+
+    public void DealDamage()
+    {
+        this.Health--;
+        if(Health <= 0)
+        {
+            Die();
+        }
+    }
+
+    protected void Die()
+    {
+        Destroy(this.gameObject);
     }
 }

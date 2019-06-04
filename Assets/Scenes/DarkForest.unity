@@ -8841,8 +8841,8 @@ Tilemap:
     m_Data: {fileID: 21300020, guid: 8ccfad9d789ddcb4c985bbc931fbe06e, type: 3}
   - m_RefCount: 139
     m_Data: {fileID: 21300034, guid: 8ccfad9d789ddcb4c985bbc931fbe06e, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300032, guid: 8ccfad9d789ddcb4c985bbc931fbe06e, type: 3}
   - m_RefCount: 40
     m_Data: {fileID: 21300004, guid: 8ccfad9d789ddcb4c985bbc931fbe06e, type: 3}
   - m_RefCount: 251
@@ -9080,6 +9080,12 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1421099472 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6464083002403011143, guid: 21adb45da26686944adc633648ae4109,
+    type: 3}
+  m_PrefabInstance: {fileID: 427004082}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1509887194
 GameObject:
   m_ObjectHideFlags: 0
@@ -10133,7 +10139,7 @@ PrefabInstance:
         type: 3}
       propertyPath: Player
       value: 
-      objectReference: {fileID: 2018155054}
+      objectReference: {fileID: 1421099472}
     - target: {fileID: 2046954639751354510, guid: d608620d210e17d418e08015c31a1f30,
         type: 3}
       propertyPath: VulnerablePosition
