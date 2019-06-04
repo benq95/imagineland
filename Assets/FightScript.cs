@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class FightScript : MonoBehaviour
 
@@ -84,9 +85,10 @@ public class FightScript : MonoBehaviour
         }
     }
 
-    protected void Die()
+    public void Die()
     {
         source.PlayOneShot(dieSound);
         Destroy(this.gameObject);
+        SceneManager.LoadScene("MainMenu");
     }
 }

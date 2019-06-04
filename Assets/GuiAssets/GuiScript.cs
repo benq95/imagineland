@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GuiScript : MonoBehaviour
@@ -68,7 +69,7 @@ public class GuiScript : MonoBehaviour
 
     public void startGame()
     {
-        Application.LoadLevel(levelScenesNames[actualLevel]);
+        SceneManager.LoadScene(levelScenesNames[actualLevel]);
         Debug.Log("start game clicked");
     }
     public void exitGame()
