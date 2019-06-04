@@ -8,7 +8,7 @@ public class ThrownWeaponDamage : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
-            //Deal dmg to player
+            collision.gameObject.GetComponentInParent<FightScript>().DealDamage();
         }
         else if(collision.tag == "Terrain")
         {

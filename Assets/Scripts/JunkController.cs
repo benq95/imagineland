@@ -25,7 +25,7 @@ public class JunkController : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            //DEAL DMG TO PLAYER
+            collision.gameObject.GetComponentInParent<FightScript>().DealDamage();
         }
     }
 }

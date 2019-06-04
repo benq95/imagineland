@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBase : DealDamageBase
+public class EnemyBase : MonoBehaviour
 {
     public TerrainTrigger FloorCollider;
     public TerrainTrigger WallCollider;
@@ -34,7 +34,7 @@ public class EnemyBase : DealDamageBase
     }
 
     // return true if object is dead
-    public override bool Damage()
+    public bool Damage()
     {
         this.Health--;
         if(Health <= 0)
@@ -74,7 +74,14 @@ public class EnemyBase : DealDamageBase
         _currentState = null;
         _animator.SetBool("Walk", false);
         _animator.SetTrigger("Attack");
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.3f);
+        var rch = Physics2D.Raycast(transform.position.ToVec2(), transform.right.ToVec2(), PlayerDetectionDistance, LayerMask.GetMask("Player"));
+        Debug.DrawRay(transform.position, (transform.right * PlayerDetectionDistance));
+        if (rch.collider != null)
+        {
+            rch.collider.GetComponentInParent<FightScript>().DealDamage();
+        }
+        yield return new WaitForSeconds(1.2f);
 
         _currentState = IddleState;
         _animator.SetBool("Walk", true);

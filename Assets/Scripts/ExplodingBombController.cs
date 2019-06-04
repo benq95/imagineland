@@ -58,7 +58,7 @@ public class ExplodingBombController : MonoBehaviour
         {
             if(Vector3.Distance(transform.position, _player.transform.position) < DamageDistance)
             {
-                //DEAL DMG TO PLAYER
+                _player.GetComponentInParent<FightScript>().DealDamage();
             }
         }
         yield return new WaitForSeconds(BombExplosionTime);

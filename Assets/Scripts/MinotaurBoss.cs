@@ -256,7 +256,14 @@ public class MinotaurBoss : DealDamageBase
     {
         _currentState = null;
         _animator.SetTrigger("Attack");
-        yield return new WaitForSeconds(1.31f);
+        yield return new WaitForSeconds(0.3f);
+        var rch = Physics2D.Raycast(transform.position.ToVec2(), transform.right.ToVec2(), PlayerDetectionDistance, LayerMask.GetMask("Player"));
+        Debug.DrawRay(transform.position, (transform.right * PlayerDetectionDistance));
+        if (rch.collider != null)
+        {
+            rch.collider.GetComponentInParent<FightScript>().DealDamage();
+        }
+        yield return new WaitForSeconds(1.01f);
         //DEAL DMG TO PLAYER
         _currentState = Phase3Attack;
         _timeCounter = 0.0f;
