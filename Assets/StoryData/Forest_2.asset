@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df12a00fcbc656a44a6be604b68f7ece, type: 3}
   m_Name: Forest_2
   m_EditorClassIdentifier: 
-  description: 
-  photo: {fileID: 0}
-  nextStoryData: {fileID: 0}
+  description: Second Panel
+  photo: {fileID: 21300000, guid: 5650acb489b42444d9e6c0c5b407cc3d, type: 3}
+  nextStoryData: {fileID: 11400000, guid: 455dd604cac1dcc40adada6e8fb49804, type: 2}

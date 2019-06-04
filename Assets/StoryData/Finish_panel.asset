@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df12a00fcbc656a44a6be604b68f7ece, type: 3}
   m_Name: Finish_panel
   m_EditorClassIdentifier: 
-  description: 
-  photo: {fileID: 0}
+  description: But everything is better with some imagination, isn't it?
+  photo: {fileID: 21300000, guid: 642e208932fe7e14193024aefbc03342, type: 3}
   nextStoryData: {fileID: 0}
