@@ -8,6 +8,7 @@ public class FightScript : MonoBehaviour
 {
     private AudioSource source;
     public AudioClip attackSound;
+    public int Health = 3;
 
     private List<GameObject> enemiesUnderHit = new List<GameObject>();
 
@@ -27,6 +28,10 @@ public class FightScript : MonoBehaviour
             source.PlayOneShot(attackSound);
             this.attackPressed = true;
             Debug.Log("Attack");
+
+            this.GetComponent<Animator>().SetTrigger("Attack");
+
+            var enemiesToDestroy = new List<GameObject>();
             var enemiesToHit = enemiesUnderHit.Distinct().ToList();
             Debug.Log(enemiesToHit.Count);
             for (int i = 0; i < enemiesToHit.Count; i++)
@@ -62,5 +67,19 @@ public class FightScript : MonoBehaviour
             Debug.Log("Enemy leave fight collider.");
             enemiesUnderHit.Remove(col.gameObject);
         }
+    }
+
+    public void DealDamage()
+    {
+        this.Health--;
+        if(Health <= 0)
+        {
+            Die();
+        }
+    }
+
+    protected void Die()
+    {
+        Destroy(this.gameObject);
     }
 }
